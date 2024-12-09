@@ -5,8 +5,8 @@ import React from 'react'
 const Categories = () => {
   return (
     <div className='flex items-center justify-between p-10'>
-        {/* <CategoryList/> */}
-        {/* <ProductsList/> */}
+        <CategoryList/>
+        <ProductsList/>
     </div>
   )
 }

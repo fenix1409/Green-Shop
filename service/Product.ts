@@ -24,8 +24,8 @@ export const Product = () => {
     const [data, setData] = useState<ProductType[]>([])
 
     useEffect(() => {
-        instance().get('/products').then(res => {
-            console.log(res.data);
+        instance().get('/products?page=1&limit=100').then(res => {
+            setData(res.data.products);
         })
     }, [])
     return data

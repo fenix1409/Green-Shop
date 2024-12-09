@@ -12,8 +12,8 @@ export const Category = () => {
     const [data, setData] = useState<CategoryType[]>([])
 
     useEffect(() => {
-        instance().get('/categories').then(res => {
-            setData(res.data);
+        instance().get('/categories?page=1&limit=100').then(res => {
+            setData(res.data.categories);
         })
     }, [])
     return data

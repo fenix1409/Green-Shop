@@ -9,7 +9,7 @@ const CategoryList = () => {
             <h2 className='text-[18px] leading-[16px] font-bold text-[#3D3D3D] mb-[7px]'>Categories</h2>
             <ul className='space-y-[15px]'>
                 {categories.map(item => (
-                    <li className='text-[15px] leading-[40px] text-[#3D3D3D]'>
+                    <li key={item.category_id} className='text-[15px] leading-[40px] text-[#3D3D3D]'>
                         {item.category_name}
                         <span className='text-[15px] leading-[40px] text-[#3D3D3D]'>(33)</span>
                     </li>

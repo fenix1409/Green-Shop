@@ -18,9 +18,9 @@ export const HomePage = () => {
   return (
     <div>
       <Hero />
-      <section className='flex justify-between'>
-        <ul className='w-[20%] p-5 space-y-5'>
-          {[{ category_name: "All", category_id: null }, ...categories].map((item: CategoryType) => <li onClick={() => setCategoryName(item.category_name)} className='cursor-pointer' key={item.category_id}>{item.category_name}</li>)}
+      <section className='flex gap-[50px] mt-[46px] p-10'>
+        <ul className='w-[17%] h-auto p-5 space-y-5 bg-[#F5F5F580] rounded-lg'>
+          {[{ category_name: "All", category_id: null }, ...categories].map((item: CategoryType) => <li onClick={() => setCategoryName(item.category_name)} className='cursor-pointer' key={item.category_id}>{item.category_name} (33)</li>)}
         </ul>
         <div className="w-[80%]">
           <ul className='flex items-center space-x-5'>

@@ -1,6 +1,8 @@
 "use client"
+import { Context } from "@/context/AuthContext";
 import { instance } from "@/hook/instance";
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import React, { SetStateAction, useContext } from "react";
 
 
 export interface ProductType {
@@ -20,13 +22,30 @@ export interface ProductType {
     image_url: string[];
 }
 
-export const Product = () => {
-    const [data, setData] = useState<ProductType[]>([])
-
-    useEffect(() => {
-        instance().get('/products?page=1&limit=100').then(res => {
-            setData(res.data.products);
+interface ParamsType {
+    page: number,
+    limit: number,
+    category: string | null,
+    tags: string | null
+}
+export const Product = (categoryName: string | null, tags: string | null, page: number, setTotalPage: React.Dispatch<SetStateAction<number>>) => {
+    const {token} = useContext(Context)
+    const params: ParamsType = {
+        page,
+        limit: 6,
+        category: categoryName == "All" ? null : categoryName,
+        tags: tags
+    };
+    const { data = [] } = useQuery({
+        queryKey: ['products', categoryName, tags, page],
+        enabled: true,
+        queryFn: () => instance().get("/products", {
+            headers: token ? { "Authorization": `Bearer ${token}` } : {},
+            params: params
+        }).then((res) => {
+            setTotalPage(res.data.total_count)
+            return res.data.products
         })
-    }, [])
+    });
     return data
 }

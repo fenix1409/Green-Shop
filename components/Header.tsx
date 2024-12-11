@@ -1,5 +1,5 @@
 "use client"
-import React, { FormEvent, useState } from 'react'
+import React, { FormEvent, useContext, useState } from 'react'
 import Button from './Button'
 import { Basket, LoginIcon, Logo, Lupa } from '@/public/icons/Icons'
 import { instance } from '@/hook/instance'
@@ -10,10 +10,13 @@ import VerifyRegister from './RegisterInputs/VerifyRegister'
 import ForgotPassword from './ForgotPassword'
 import ResetPassword from './ResetPassword'
 import Link from 'next/link'
+import { Context } from '@/context/AuthContext'
 
 const Header = () => {
     const [registerEmail, setRegisterEmail] = useState<string>("")
     const [loginModal, setLoginModal] = useState<boolean>(false)
+    const {likedList} = useContext(Context)
+    const { setToken } = useContext(Context)
     const [isLogin, setIsLogin] = useState<"login" | "register" | "verifyRegister" | "reset-password" | "forgotPassword">("login")
 
     function loginSubmit(e: FormEvent<HTMLFormElement>) {
@@ -23,8 +26,9 @@ const Header = () => {
                 password: (e.target as HTMLFormElement).password.value,
                 usernameoremail: (e.target as HTMLFormElement).email.value
             }
-            instance().post("/login", data).then(() => {
+            instance().post("/login", data).then((res) => {
                 setLoginModal(false)
+                setToken(res.data.access_token)
             })
         }
         else if (isLogin == "register") {
@@ -35,7 +39,7 @@ const Header = () => {
                 password: (e.target as HTMLFormElement).password.value
             }
             if ((e.target as HTMLFormElement).password.value == (e.target as HTMLFormElement).confirm_password.value) {
-                instance().post("register", data).then(() => {
+                instance().post("/register", data).then(() => {
                     setRegisterEmail(data.email)
                     setIsLogin("verifyRegister")
                 })
@@ -63,7 +67,7 @@ const Header = () => {
         else if (isLogin == "reset-password") {
             const data = {
                 email: registerEmail,
-                password: (e.target as HTMLFormElement).password.value,
+                new_password: (e.target as HTMLFormElement).password.value,
                 otp: (e.target as HTMLFormElement).otp.value
             }
             instance().put(`/reset-password`, data).then(() => setIsLogin("login"))
@@ -88,8 +92,8 @@ const Header = () => {
                 </li>
             </ul>
             <div className="flex items-center gap-[30px]">
-                <div className="cursor-pointer"><Lupa/></div>
-                <Link href={'/shop'}><Basket /></Link>
+                <div className="cursor-pointer"><Lupa /></div>
+                <Link className='flex items-center gap-1' href={'/shop'}><Basket /> {likedList.length}</Link>
                 <Button onClick={() => setLoginModal(true)} title='Login' type='button' leftIcon={<LoginIcon />} />
             </div>
             <Modal isOpen={loginModal} setIsOpen={setLoginModal} width={500}>

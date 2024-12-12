@@ -13,14 +13,10 @@ const ProductsList: React.FC<{ item: ProductType }> = ({ item }) => {
 
   const handleSave = () => {
     if (likedList.includes(item.product_id)) {
-      // Agar mahsulot likedList'da bo'lsa, uni olib tashlash
       setLikedList(likedList.filter(id => id !== item.product_id))
     } else {
-      // Aks holda, ro'yxatga qo'shish
       setLikedList([...likedList, item.product_id])
     }
-
-    // Agar serverga yuborish kerak bo'lsa, quyidagi kodni ishlating:
     if (token) {
       likeMutation.mutate(item.product_id)
     }

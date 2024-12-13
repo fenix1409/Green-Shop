@@ -25,19 +25,25 @@ export interface ProductType {
 interface ParamsType {
     page: number,
     limit: number,
-    category: string | null,
-    tags: string | null
+    category?: string | null,
+    tags?: string | null,
+    min_price: number,
+    max_price: number,
+    size:string | null
 }
-export const Product = (categoryName: string | null, tags: string | null, page: number, setTotalPage: React.Dispatch<SetStateAction<number>>) => {
-    const {token} = useContext(Context)
+export const Product = (categoryName: string | null, tags: string | null, page: number, setTotalPage: React.Dispatch<SetStateAction<number>>, fullPrice: number[], size:string | null) => {
+    const { token } = useContext(Context)
     const params: ParamsType = {
         page,
         limit: 6,
         category: categoryName == "All" ? null : categoryName,
-        tags: tags
+        tags: tags,
+        min_price: fullPrice[0],
+        max_price: fullPrice[1],
+        size
     };
     const { data = [] } = useQuery({
-        queryKey: ['products', categoryName, tags, page],
+        queryKey: ['products', categoryName, tags, page, fullPrice, size],
         enabled: true,
         queryFn: () => instance().get("/products", {
             headers: token ? { "Authorization": `Bearer ${token}` } : {},

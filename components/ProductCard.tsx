@@ -9,19 +9,9 @@ import React, { useContext } from 'react'
 
 const ProductsList: React.FC<{ item: ProductType }> = ({ item }) => {
   const queryClient = useQueryClient()
-  const { token, setLikedList, likedList } = useContext(Context)
+  const { token } = useContext(Context)
 
-  const handleSave = () => {
-    if (likedList.includes(item.product_id)) {
-      setLikedList(likedList.filter(id => id !== item.product_id))
-    } else {
-      setLikedList([...likedList, item.product_id])
-    }
-    if (token) {
-      likeMutation.mutate(item.product_id)
-    }
-  }
-
+  // like part 
   const likeMutation = useMutation({
     mutationFn: (id: string) => instance().post(`/like/${id}`, {}, {
       headers: { "Authorization": `Bearer ${token}` }
@@ -31,14 +21,37 @@ const ProductsList: React.FC<{ item: ProductType }> = ({ item }) => {
     }
   })
 
+  function handleLikeBtnClick(id: string) {
+    if (!token) {
+      alert("Logindan o'tish kerak!")
+    }
+    else {
+      likeMutation.mutate(id)
+    }
+  }
+  // like part 
+
+  // basket part 
   const basketMutation = useMutation({
-    mutationFn: (id: string) => instance().post(`/basket/${id}`, {}, {
+    mutationFn: (data: { productId: string }) => instance().post(`/basket`, data, {
       headers: { "Authorization": `Bearer ${token}` }
     }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['products'] })
+      queryClient.invalidateQueries({ queryKey: ['basket_list'] })
     }
   })
+
+  function handleBasketBtnClick(productId: string) {
+    if (!token) {
+      alert("Logindan o'tish kerak!")
+    }
+    else {
+      const data = { productId }
+      basketMutation.mutate(data)
+    }
+  }
+  // basket part 
 
   return (
     <div className='w-[300px]'>
@@ -51,8 +64,8 @@ const ProductsList: React.FC<{ item: ProductType }> = ({ item }) => {
         </div>
       </div>
       <div className="space-x-2">
-        <button onClick={() => token ? basketMutation.mutate(item.product_id) : {}} className={`text-[20px] font-bold ${item.liked && "text-red-500"}`}><LikeIcon/></button>
-        <button onClick={handleSave} className={`text-[20px] font-bold ${item.basket && "text-green-500"}`}><SaveIcon/></button>
+        <button onClick={() => handleLikeBtnClick(item.product_id)} className={`text-[20px] font-bold ${item.liked ? "text-red-500" : ""}`}><LikeIcon /></button>
+        <button onClick={() => handleBasketBtnClick(item.product_id)} className={`text-[20px] font-bold ${item.basket ? "text-green-500" : ""}`}><SaveIcon /></button>
       </div>
     </div>
   )

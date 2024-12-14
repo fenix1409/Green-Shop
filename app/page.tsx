@@ -47,9 +47,9 @@ export const HomePage = () => {
           </div>
           <ul className='space-y-4'>
             <h2 className='text-[18px] leading-[16px] font-bold mb-[7px]'>Size</h2>
-            <li onClick={() => setSize('Small')} className='cursor-pointer'>Small</li>
-            <li onClick={() => setSize('Medium')} className='cursor-pointer'>Medium</li>
-            <li onClick={() => setSize('Large')} className='cursor-pointer'>Large</li>
+            <li onClick={() => setSize('Small')} className='cursor-pointer'>Small (119)</li>
+            <li onClick={() => setSize('Medium')} className='cursor-pointer'>Medium (86)</li>
+            <li onClick={() => setSize('Large')} className='cursor-pointer'>Large (78)</li>
           </ul>
         </ul>
         <div className="w-[80%]">

@@ -1,4 +1,5 @@
 "use client"
+import Footer from '@/components/Footer'
 import ProductsList from '@/components/ProductCard'
 import debounce from '@/hook/debounce'
 import Hero from '@/pages/Home pages/Hero'
@@ -26,7 +27,7 @@ export const HomePage = () => {
   return (
     <div>
       <Hero />
-      <section className='flex gap-[50px] mt-[46px] p-10'>
+      <section className='flex gap-[50px] mt-[46px] p-10 mb-[94px]'>
         <ul className='w-[17%] h-auto p-5 space-y-5 bg-[#F5F5F580] rounded-lg'>
           {[{ category_name: "All", category_id: null }, ...categories].map((item: CategoryType) => <li onClick={() => setCategoryName(item.category_name)} className='cursor-pointer' key={item.category_id}>{item.category_name} (33)</li>)}
           <Slider
@@ -65,6 +66,7 @@ export const HomePage = () => {
           <Pagination onChange={(e) => setPage(e)} color='success' size='lg' initialPage={page} total={totalPage / 6} />
         </div>
       </section>
+      <Footer/>
     </div>
   )
 }

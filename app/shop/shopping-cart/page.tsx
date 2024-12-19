@@ -4,7 +4,7 @@ import Carusel from '@/components/Carusel/Carusel'
 import Modal from '@/components/Modal'
 import { Context } from '@/context/AuthContext'
 import { instance } from '@/hook/instance'
-import { Arrow, DeleteIcon } from '@/public/icons/Icons'
+import { Arrow, DeleteIcon, Order } from '@/public/icons/Icons'
 import { ProductType } from '@/service/Product'
 import { decrement, increment } from '@/store/counterSlice'
 import { RootState } from '@/store/store'
@@ -164,7 +164,30 @@ const page = () => {
                 <Carusel />
             </div>
             <Modal isOpen={openModal} setIsOpen={setOpenModal} width={700}>
+                <div className="bg-[#46A3580F] pb-[15px] border-b-[1px] border-[#46A3580F]">
+                    <div className='mb-[16px] flex justify-center'><Order/></div>
+                    <p className='text-[16px] leading-[16px] text-[#727272] text-center'>Your order has been received</p>
+                </div>
+                <ul className='flex items-center justify-center gap-[45px] pb-[15px] border-b-[1px] border-[pl-[23px] border-[#46A35833]]'>
+                    <li className='w-[94px]'>
+                        <strong className='text-[14px] leading-[16px] text-[#727272]'>Order Number</strong>
+                        <p className='text-[15px] leading-[16px] font-bold text-[#727272]'>19586687</p>
+                    </li>
+                    <li className='w-[87px] pl-[23px] border-l-[1px] border-[#46A35833]'>
+                        <strong className='text-[14px] leading-[16px] text-[#727272]'>Date</strong>
+                        <p className='text-[15px] leading-[16px] font-bold text-[#727272]'>15 Sep, 2021</p>
+                    </li>
+                    <li className='w-[61px] pl-[23px] border-l-[1px] border-[#46A35833]'>
+                        <strong className='text-[14px] leading-[16px] text-[#727272]'>Total</strong>
+                        <p className='text-[15px] leading-[16px] font-bold text-[#727272]'>2,699.00</p>
+                    </li>
+                    <li className='w-[118px] pl-[23px] border-l-[1px] border-[#46A35833]'>
+                        <strong className='text-[14px] leading-[16px] text-[#727272]'>Payment Method</strong>
+                        <p className='text-[15px] leading-[16px] font-bold text-[#727272]'>Cash on delivery</p>
+                    </li>
+                </ul>
                 <div className=' mx-auto'>
+                    <h2 className='text-[15px] leading-[16px] font-bold pb-[11px] text-[#3D3D3D] mt-[18px]'>Order details</h2>
                     <div className='flex items-center justify-around font-bold text-[#3D3D3D] text-[16px] leading-[16px] border-b-[1px] pb-[11px]'>
                         <div className='w-[20%] text-start'>Products</div>
                         <div className='w-[20%] text-center'>Quantity</div>

@@ -1,4 +1,5 @@
 "use client"
+import BlogPosts from '@/components/BlogPosts'
 import ProductsList from '@/components/ProductCard'
 import HeroCarusel from '@/components/ProductCarusel/ProductCarusel'
 import Sale from '@/components/Sale'
@@ -84,6 +85,7 @@ export const HomePage = () => {
           </li>
         </ul>
       </div>
+      <section className='max-sm:hidden'><BlogPosts/></section>
     </div>
   )
 }

@@ -1,29 +1,11 @@
 import Image from 'next/image'
 import React from 'react'
 import Button from './Button'
-import { Facebook, Insta, LinkedIn, LocationIcon, Logo, MessegeIcon, MoreIcon, PhoneIcon, Plant, Twitter, Youtube } from '@/public/icons/Icons'
+import { Facebook, Insta, LinkedIn, LocationIcon, Logo, MessegeIcon, PhoneIcon, Plant, Twitter, Youtube } from '@/public/icons/Icons'
 
 const Footer = () => {
     return (
-        <div className='p-10'>
-            <ul className="flex items-center justify-between mb-[138px]">
-                <div className='w-[586px] h-[250px] flex object-contain justify-between items-center bg-[#FBFBFB] px-[30px] py-[37px]'>
-                    <Image style={{ width: "292px", height: "292px" }} src={'/images/succulents.png'} alt='image' priority width={292} height={292} />
-                    <div>
-                        <h2 className='text-[19px] leading-[24px] font-black mb-2'>Summer cactus & succulents</h2>
-                        <p className='text-[14px] leading-[24px] text-[#727272] mb-[25px]'>We are an online plant shop offering a wide range of cheap and trendy plants</p>
-                        <Button title='Find more' rightIcon={<MoreIcon />} type='button' extraStyle='w-[140px] p-3' />
-                    </div>
-                </div>
-                <li className='w-[586px] h-[250px] flex items-center justify-between bg-[#FBFBFB] px-[30px] py-[37px]'>
-                    <Image style={{ width: "292px", height: "292px", background: "transparent" }} src={'/images/trends.png'} alt='image' priority width={292} height={292} />
-                    <div>
-                        <h2 className='text-[19px] leading-[24px] font-black mb-2'>Summer cactus & succulents</h2>
-                        <p className='text-[14px] leading-[24px] text-[#727272] mb-[25px]'>We are an online plant shop offering a wide range of cheap and trendy plants</p>
-                        <Button title='Find more' rightIcon={<MoreIcon />} type='button' extraStyle='w-[140px] p-3' />
-                    </div>
-                </li>
-            </ul>
+        <div className='px-10 max-sm:hidden'>
             <footer className='p-10'>
                 <div className="p-[25px] bg-[#FBFBFB] flex items-center gap-[80px]">
                     <div className="w-[204px]">
@@ -45,23 +27,23 @@ const Footer = () => {
                         <strong className='text-[18px] leading-[16px] font-bold mb-[18px] inline-block'>Would you like to join newsletters?</strong>
                         <label className='relative flex items-center flex-row-reverse mb-[17px]'>
                             <input className={`w-[354px] pl-[14px] py-3 rounded-md outline-none focus:border-[#46A358] border-[1px] border-[#EAEAEA]`} required placeholder="enter your email address..." />
-                            <Button extraStyle='py-[12px] w-[87px] absolute' title='Join' type='button'/>
+                            <Button extraStyle='py-[12px] w-[87px] absolute h-[48px]' title='Join' type='button' />
                         </label>
                         <p className='text-[13px] leading-[22px] text-[#727272]'>We usually post offers and challenges in newsletter. We’re your online houseplant destination. We offer a wide range of houseplants and accessories shipped directly from our (green)house to yours! </p>
                     </div>
                 </div>
                 <div className="flex items-center gap-[70px] pt-[25px] pb-[19px] bg-[#46A3581A] pl-[23px]">
-                    <Logo/>
+                    <Logo />
                     <div className="flex items-center gap-[9px]">
-                        <LocationIcon/>
+                        <LocationIcon />
                         <p className='text-[14px] leading-[22px] text-[#3D3D3D]'>70 West Buckingham Ave. Farmingdale, NY 11735</p>
                     </div>
                     <div className="flex items-center gap-[9px]">
-                        <MessegeIcon/>
+                        <MessegeIcon />
                         <a href='mailto:contact@greenshop.com' className='text-[14px] leading-[22px] text-[#3D3D3D] cursor-pointer'>contact@greenshop.com</a>
                     </div>
                     <div className="flex items-center gap-[9px]">
-                        <PhoneIcon/>
+                        <PhoneIcon />
                         <a className='text-[14px] leading-[22px] text-[#3D3D3D] cursor-pointer' href="tel:+8801911717490">+88 01911 717 490</a>
                     </div>
                 </div>
@@ -93,14 +75,14 @@ const Footer = () => {
                     <div>
                         <strong className='text-[18px] leading-[16px] font-bold text-[#3D3D3D] mb-5 inline-block'>Social Media</strong>
                         <div className="flex items-center gap-[10px] mb-[33px]">
-                            <a href="#"><Facebook/></a>
-                            <a href="#"><Insta/></a>
-                            <a href="#"><Twitter/></a>
-                            <a href="#"><LinkedIn/></a>
-                            <a href="#"><Youtube/></a>
+                            <a href="#"><Facebook /></a>
+                            <a href="#"><Insta /></a>
+                            <a href="#"><Twitter /></a>
+                            <a href="#"><LinkedIn /></a>
+                            <a href="#"><Youtube /></a>
                         </div>
                         <strong className='text-[18px] leading-[16px] font-bold text-[#3D3D3D] mb-[13px] inline-block'>We accept</strong>
-                        <Image style={{width:"224px", height:"26px"}} src={'/images/accept.png'} alt='image' width={224} height={26}/>
+                        <Image style={{ width: "224px", height: "26px" }} src={'/images/accept.png'} alt='image' width={224} height={26} priority/>
                     </div>
                 </div>
             </footer>

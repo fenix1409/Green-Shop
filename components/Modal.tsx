@@ -10,7 +10,7 @@ interface ModalType {
 }
 const Modal: React.FC<ModalType> = ({ isOpen, setIsOpen, width, children }) => {
     return (
-        <div onClick={(e) => (e.target as HTMLDivElement).id == "wrapper" ? setIsOpen(false) : ""} id='wrapper' className={`fixed inset-0 backdrop-blur bg-[#00000029] flex items-center justify-center ${!isOpen && "scale-0"}`}>
+        <div onClick={(e) => (e.target as HTMLDivElement).id == "wrapper" ? setIsOpen(false) : ""} id='wrapper' className={`absolute z-10 inset-0 backdrop-blur bg-[#00000029] flex items-center justify-center ${!isOpen && "scale-0"}`}>
             <div style={{ width: `${width}px` }} className="absolute p-5 bg-white rounded-md">
                 <button className='absolute top-0 right-3'><CloseIcon /></button>
                 {children}

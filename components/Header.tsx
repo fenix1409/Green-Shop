@@ -1,7 +1,7 @@
 "use client"
 import React, { FormEvent, useContext, useState } from 'react'
 import Button from './Button'
-import { Basket, LoginIcon, Logo, Lupa } from '@/public/icons/Icons'
+import { Basket, LoginIcon, Logo, Lupa, More } from '@/public/icons/Icons'
 import { instance } from '@/hook/instance'
 import Modal from './Modal'
 import LoginInputs from './LoginInputs'
@@ -13,15 +13,18 @@ import Link from 'next/link'
 import { Context } from '@/context/AuthContext'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { Badge } from '@nextui-org/badge'
-
+import { useRouter } from 'next/navigation'
+import Input from './Input'
 
 const Header = () => {
-    const {token} = useContext(Context)
+    const { token } = useContext(Context)
     const [registerEmail, setRegisterEmail] = useState<string>("")
     const [loginModal, setLoginModal] = useState<boolean>(false)
     const { setToken } = useContext(Context)
     const queryClient = useQueryClient()
+    const router = useRouter()
     const [isLogin, setIsLogin] = useState<"login" | "register" | "verifyRegister" | "reset-password" | "forgotPassword">("login")
+    const [moreMenuOpen, setMoreMenuOpen] = useState<boolean>(false)
 
     function loginSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault()
@@ -94,41 +97,45 @@ const Header = () => {
     // })
     // liked product 
 
-
     // Saved basket 
-    const {data:BasketProducts = []} = useQuery({
-        queryKey:['basket_list'],
+    const { data: BasketProducts = [] } = useQuery({
+        queryKey: ['basket_list'],
         queryFn: () => token ? instance().get(`/basket`, {
-            headers:token ? {'Authorization' : `Bearer ${token}`} : {},
-            params:{page:1, limit:1000}
+            headers: { 'Authorization': `Bearer ${token}` },
+            params: { page: 1, limit: 1000 }
         }).then(res => res.data.ProductId) : []
     })
     // Saved basket 
 
     return (
-        <header className='p-10 flex items-center justify-between'>
-            <Logo />
-            <ul className='flex items-center gap-[50px]'>
-                <li>
-                    <Link className='text-[16px] leading-[20px] font-bold text-[#3D3D3D]' href={'/'}>Home</Link>
-                </li>
-                <li>
-                    <Link className='text-[16px] leading-[20px] font-bold text-[#3D3D3D]' href={'/shop'}>Shop</Link>
-                </li>
-                <li>
-                    <Link className='text-[16px] leading-[20px] font-bold text-[#3D3D3D]' href={'/plant-care'}>Plant Care</Link>
-                </li>
-                <li>
-                    <Link className='text-[16px] leading-[20px] font-bold text-[#3D3D3D]' href={'/blogs'}>Blogs</Link>
-                </li>
-            </ul>
-            <div className="flex items-center gap-[30px]">
-                <div className="cursor-pointer"><Lupa /></div>
-                <button>
-                    <Badge color='success' content={token ? (BasketProducts.length ? BasketProducts.length : "") : ""}><Basket /></Badge>
-                    {/* <Badge color='success' content={token ? (LikedProducts.length ? LikedProducts.length : "") : ""}><Basket /></Badge> */}
-                </button>
-                <Button onClick={() => setLoginModal(true)} title='Login' type='button' leftIcon={<LoginIcon />} />
+        <header className='p-10 flex items-center max-sm:justify-center sm:justify-between bg-white'>
+            <div className='hidden sm:flex items-center justify-between w-full'>
+                <Logo />
+                <ul className='flex items-center gap-[50px]'>
+                    <li>
+                        <Link className='text-[16px] leading-[20px] font-bold text-[#3D3D3D]' href={'/'}>Home</Link>
+                    </li>
+                    <li>
+                        <Link className='text-[16px] leading-[20px] font-bold text-[#3D3D3D]' href={'/shop'}>Shop</Link>
+                    </li>
+                    <li>
+                        <Link className='text-[16px] leading-[20px] font-bold text-[#3D3D3D]' href={'/plant-care'}>Plant Care</Link>
+                    </li>
+                    <li>
+                        <Link className='text-[16px] leading-[20px] font-bold text-[#3D3D3D]' href={'/blogs'}>Blogs</Link>
+                    </li>
+                </ul>
+                <div className="flex items-center gap-[30px]">
+                    <div className="cursor-pointer"><Lupa /></div>
+                    <button onClick={() => router.push('/shop/shopping-cart')}>
+                        <Badge color='success' content={token ? (BasketProducts.length ? BasketProducts.length : "") : ""}><Basket /></Badge>
+                    </button>
+                    <Button onClick={() => setLoginModal(true)} title='Login' type='button' leftIcon={<LoginIcon />} />
+                </div>
+            </div>
+            <div className="flex items-center justify-center gap-[8px] sm:hidden">
+                <Input extraStyle='!w-full' type='text' name='searchInput' placeholder='Find your plants' />
+                <button onClick={() => setMoreMenuOpen(true)} className='bg-[#46A358] rounded-[14px] p-[11px]'><More /></button>
             </div>
             <Modal isOpen={loginModal} setIsOpen={setLoginModal} width={500}>
                 <ul className='flex items-center justify-center gap-3 mb-[53px]'>
@@ -143,6 +150,24 @@ const Header = () => {
                     {isLogin == "forgotPassword" && <ForgotPassword />}
                     {isLogin == "reset-password" && <ResetPassword />}
                 </form>
+            </Modal>
+            <Modal isOpen={moreMenuOpen} setIsOpen={setMoreMenuOpen} width={300}>
+                <ul className='flex flex-col items-center gap-4'>
+                    <li>
+                        <Link className='text-[16px] leading-[20px] font-bold text-[#3D3D3D]' href={'/'}>Home</Link>
+                    </li>
+                    <li>
+                        <Link className='text-[16px] leading-[20px] font-bold text-[#3D3D3D]' href={'/shop'}>Shop</Link>
+                    </li>
+                    <li>
+                        <Link className='text-[16px] leading-[20px] font-bold text-[#3D3D3D]' href={'/plant-care'}>Plant Care</Link>
+                    </li>
+                    <li>
+                        <Link className='text-[16px] leading-[20px] font-bold text-[#3D3D3D]' href={'/blogs'}>Blogs</Link>
+                    </li>
+                </ul>
+                <div onClick={() => router.push('/shop/shopping-cart')} className="text-[16px] leading-[20px] font-bold text-[#3D3D3D] text-center mt-2">Shopping-Cart</div>
+                <Button extraStyle='max-sm:mx-auto mt-3' onClick={() => setLoginModal(true)} title='Login' type='button' leftIcon={<LoginIcon />} />
             </Modal>
         </header>
     )

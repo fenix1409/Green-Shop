@@ -5,11 +5,13 @@ import { LikeIcon, SaveIcon } from '@/public/icons/Icons'
 import { ProductType } from '@/service/Product'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 import React, { useContext, useState } from 'react'
 
 const ProductsList: React.FC<{ item: ProductType }> = ({ item }) => {
   const queryClient = useQueryClient()
   const { token } = useContext(Context)
+  const router = useRouter()
   const [show, setShow] = useState<boolean>(false)
 
   // like part 
@@ -55,9 +57,9 @@ const ProductsList: React.FC<{ item: ProductType }> = ({ item }) => {
   // basket part 
 
   return (
-    <div onMouseEnter={() => setShow(true)} onMouseLeave={() => setShow(false)} className='w-[300px] duration-300'>
+    <div onMouseEnter={() => setShow(true)} onMouseLeave={() => setShow(false)} className='max-sm:w-[175px] sm:w-[258px]'>
       <div>
-        <Image style={{ width: "258px", height: "300px" }} src={item.image_url ? item.image_url[0] : "/images/flower.png"} alt='image' width={258} height={300} priority />
+        <Image onClick={() => router.push(`/shop/${item.product_id}`)} className='max-sm:w-[168px] max-sm:h-[168px] sm:w-[258px] sm:h-[300px]' src={item.image_url ? item.image_url[0] : "/images/flower.png"} alt='image' width={258} height={300} priority />
         {show && (<div className="space-x-2">
           <button onClick={() => handleLikeBtnClick(item.product_id)} className={`text-[20px] font-bold ${item.liked ? "text-red-500" : ""}`}><LikeIcon /></button>
           <button onClick={() => handleBasketBtnClick(item.product_id)} className={`text-[20px] font-bold ${item.basket ? "text-green-500" : ""}`}><SaveIcon /></button>
@@ -66,8 +68,8 @@ const ProductsList: React.FC<{ item: ProductType }> = ({ item }) => {
       <div className="mt-[12px]">
         <h2 className='text-[16px] leading-[16px] text-[#3D3D3D] mb-[6px]'>{item.product_name}</h2>
         <div className="flex items-center gap-[17px]">
-          <p className='text-[18px] leading-[16px] font-bold text-[#3D3D3D] line-through opacity-30'>{item.cost} $</p>
-          {item.discount && <p className='text-[18px] leading-[16px] font-bold text-[#46A358]'>{item.discount} $</p>}
+          <p className='max-sm:hidden text-[18px] leading-[16px] font-bold text-[#3D3D3D] line-through opacity-30'>{item.cost} $</p>
+          {item.discount && <p className='max-sm:text-[16px] sm:text-[18px] leading-[16px] font-bold text-[#46A358]'>{item.discount} $</p>}
         </div>
       </div>
     </div>

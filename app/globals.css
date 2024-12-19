@@ -19,3 +19,9 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+.hero{
+  background-image: url('/images/mobile-img.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}

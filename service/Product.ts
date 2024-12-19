@@ -20,6 +20,7 @@ export interface ProductType {
     liked: boolean;
     basket: boolean;
     image_url: string[];
+    totalPrice?: number | null
 }
 
 interface ParamsType {

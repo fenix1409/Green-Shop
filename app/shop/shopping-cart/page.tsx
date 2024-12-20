@@ -6,26 +6,17 @@ import { Context } from '@/context/AuthContext'
 import { instance } from '@/hook/instance'
 import { Arrow, DeleteIcon, Order } from '@/public/icons/Icons'
 import { ProductType } from '@/service/Product'
-import { decrement, increment } from '@/store/counterSlice'
-import { RootState } from '@/store/store'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import React, { useContext, useEffect, useMemo, useState } from 'react'
 import toast, { Toaster } from 'react-hot-toast'
-import { useSelector } from 'react-redux'
-import { useDispatch } from 'react-redux'
 
 const page = () => {
     const { token } = useContext(Context)
     const queryClient = useQueryClient()
     const router = useRouter()
     const [openModal, setOpenModal] = useState<boolean>(false)
-    const dispatch = useDispatch()
-    const count = useSelector((state: RootState) => state.order.items)
-
-    queryClient.invalidateQueries({ queryKey: ['product'] })
-    queryClient.invalidateQueries({ queryKey: ['basket_get_all'] })
 
     // get all part 
     const { data = [] } = useQuery({
@@ -40,13 +31,13 @@ const page = () => {
     useEffect(() => {
         if (data.length > 0) {
             const updatedProducts = data.map((item: ProductType) => {
-                item.count = count[item.product_id] || 1
+                item.count = 1
                 item.totalPrice = item.count * item.cost
                 return item
             })
             setBasketProducts(updatedProducts)
         }
-    }, [data, count])
+    }, [data])
     // get all part 
 
     // delete part 
@@ -71,17 +62,15 @@ const page = () => {
         setBasketProducts(item => item.map(product =>
             product.product_id === productId ? { ...product, count: product.count + 1, totalPrice: (product.count + 1) * product.cost } : product)
         )
-        dispatch(increment(productId))
     }
 
     const handleDecrement = (productId: string) => {
         setBasketProducts(price => price.map(product =>
             product.product_id === productId && product.count > 1 ? { ...product, count: product.count - 1, totalPrice: (product.count - 1) * product.cost } : product)
         )
-        dispatch(decrement(productId))
     }
     // increment part 
-
+    console.log(basketProducts);
 
     // subtotal fixed  part 
     const shiping = 16

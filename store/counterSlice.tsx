@@ -1,31 +1,3 @@
-// import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-// const initialState = {
-//   value: 0
-// }
-
-// const orderSlice = createSlice({
-//   name: 'order',
-//   initialState,
-//   reducers: {
-//     increment: (state) => {
-//       state.value += 1
-//     },
-//     decrement: (state) => {
-//       state.value -= 1
-//     },
-//     setCount: (state, action: PayloadAction<number>) => {
-//       state.value = action.payload
-//     }
-//   }
-// })
-
-// export const { increment, decrement, setCount } = orderSlice.actions
-// export default orderSlice.reducer
-
-
-
-// filepath: /c:/Najot Ta'lim/8- OY/green-shop/app/orderSlice.ts
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface OrderState {

@@ -1,5 +1,7 @@
 "use client"
 import BlogPosts from '@/components/BlogPosts'
+import Button from '@/components/Button'
+import CreateModal from '@/components/CreateModal'
 import ProductsList from '@/components/ProductCard'
 import HeroCarusel from '@/components/ProductCarusel/ProductCarusel'
 import Sale from '@/components/Sale'
@@ -16,19 +18,30 @@ export const HomePage = () => {
   const [categoryName, setCategoryName] = useState<string | null>(null)
   const [tags, setTags] = useState<string | null>(null)
   const [size, setSize] = useState<string | null>(null)
-
   const [price, setPrice] = useState<number[] | number>([39, 1230])
   const fullPrice = debounce(price, 1000)
-
-
   const [page, setPage] = useState<number>(1)
   const [totalPage, setTotalPage] = useState<number>(10)
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
+
 
   const categories: CategoryType[] = Category()
   const products: ProductType[] = Product(categoryName, tags, page, setTotalPage, fullPrice, size)
+
+  // modal part 
+  function handleOpenModal() {
+    setIsModalOpen(true)
+  }
+  function handleCloseModal() {
+    setIsModalOpen(false)
+  }
+  // modal part 
+
   return (
     <div>
       <div><HeroCarusel /></div>
+      <Button onClick={handleOpenModal} title='Create a Product' type='button' extraStyle='!w-[150px] mt-5' />
+      <CreateModal isOpen={isModalOpen} onClose={handleCloseModal} />
       <section className='flex gap-[50px] mt-[46px] p-10 mb-[94px]'>
         <ul className='max-sm:hidden w-[17%] h-auto p-5 space-y-5 bg-[#F5F5F580] rounded-lg'>
           {[{ category_name: "All", category_id: null }, ...categories].map((item: CategoryType) => <li onClick={() => setCategoryName(item.category_name)} className='cursor-pointer' key={item.category_id}>{item.category_name} (33)</li>)}
@@ -72,20 +85,20 @@ export const HomePage = () => {
       <div className="sm:hidden fixed bottom-0 left-0 right-0 z-50 bg-white p-4 shadow-lg">
         <ul className='flex justify-around'>
           <li>
-            <Link className='text-[16px] leading-[20px] font-bold text-[#3D3D3D]' href={'/'}><HomeIcon/></Link>
+            <Link className='text-[16px] leading-[20px] font-bold text-[#3D3D3D]' href={'/'}><HomeIcon /></Link>
           </li>
           <li>
-            <Link className='text-[16px] leading-[20px] font-bold text-[#3D3D3D]' href={'#'}><Likes/></Link>
+            <Link className='text-[16px] leading-[20px] font-bold text-[#3D3D3D]' href={'#'}><Likes /></Link>
           </li>
           <li>
-            <Link className='text-[16px] leading-[20px] font-bold text-[#3D3D3D]' href={'/shop/shopping-cart'}><Korzina/></Link>
+            <Link className='text-[16px] leading-[20px] font-bold text-[#3D3D3D]' href={'/shop/shopping-cart'}><Korzina /></Link>
           </li>
           <li>
-            <Link className='text-[16px] leading-[20px] font-bold text-[#3D3D3D]' href={'#'}><Profile/></Link>
+            <Link className='text-[16px] leading-[20px] font-bold text-[#3D3D3D]' href={'#'}><Profile /></Link>
           </li>
         </ul>
       </div>
-      <section className='max-sm:hidden'><BlogPosts/></section>
+      <section className='max-sm:hidden'><BlogPosts /></section>
     </div>
   )
 }

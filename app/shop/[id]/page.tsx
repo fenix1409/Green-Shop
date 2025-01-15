@@ -23,13 +23,13 @@ const page = () => {
   const dispatch = useDispatch()
   const count = useSelector((state: RootState) => state.order.items)
 
-  const [page, setPage] = useState<number>(1)
-  const [totalPage, setTotalPage] = useState<number>(10)
-  const [price, setPrice] = useState<number[] | number>([39, 1230])
+  const [page] = useState<number>(1)
+  const [, setTotalPage] = useState<number>(10)
+  const [price] = useState<number[] | number>([39, 1230])
   const fullPrice = debounce(price, 1000)
   const [categoryName, setCategoryName] = useState<string | null>(null)
-  const [tags, setTags] = useState<string | null>(null)
-  const [size, setSize] = useState<string | null>(null)
+  const [tags] = useState<string | null>(null)
+  const [size] = useState<string | null>(null)
   const products: ProductType[] = Product(categoryName, tags, page, setTotalPage, fullPrice, size)
 
   // like part 
